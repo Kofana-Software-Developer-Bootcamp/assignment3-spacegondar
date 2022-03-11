@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 
 namespace uzayc
 {
@@ -7,9 +9,14 @@ namespace uzayc
     {
         static void Main(string[] args)
         {
+            //yeni
+            List<string> allOrder = new List<string>();
+            List<string> contolOrder = new List<string>();
+            var a = allOrder.All(contolOrder.Contains);
+            //yeni
             bool lop = true; // While döngüsünün bitmesi için sonda bunun içine atama yapıyoruz
             int[] aaaallId = new int[100]; //100'ü variable ile değiştir her işlem sonrası x'i arttır
-            List<int> allId = new List<int>();
+            List<string> allId = new List<string>();
             List<customers> allCust = new List<customers>();
             // List<Author> AuthorList = new List<Author>();
             // int[] arr_sample = intermediate_list.ToArray();
@@ -43,18 +50,30 @@ namespace uzayc
 
                 customers custData = new customers();
                 Console.Write("Yani kayıt oluşturmak için Tc giriniz: ");
-                int recentId = Convert.ToInt32(Console.ReadLine());
+                string recentId = Console.ReadLine();
+
+                void findId()
+                {
+                    foreach (var customerIndex in allCust)
+                    {
+                        if (customerIndex.idNo == recentId)
+                        {
+                            Console.WriteLine("Existing Customer => Name: {0}", customerIndex.firstName);
+                        }
+                    }
+                }
 
                 if (allId.Contains(recentId))
                 {
-                    Console.WriteLine("Müşter Bilgisi mevcut..");
+                    Console.WriteLine("Müşteri Bilgisi mevcut..");
+                    findId();
                     Console.WriteLine("Çıkmak istiyorsanız false yazın: ");
                     lop = Convert.ToBoolean(Console.ReadLine());
                 }
                 else
                 {
                     allId.Add(recentId);
-                    custData.idNo = Convert.ToString(recentId);
+                    custData.idNo = recentId;
                     Console.Write("İsim giriniz: ");
                     custData.firstName = Console.ReadLine();
                     Console.Write("Soyisim giriniz: ");
@@ -62,27 +81,47 @@ namespace uzayc
                     Console.Write("Cinsiyet giriniz: ");
                     custData.gender = Console.ReadLine();
 
+                    // yeni
+
+                    static string MainMenu()
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("Seçenekler:");
+                        Console.WriteLine("1.) Microsoft");
+                        Console.WriteLine("2.) IBM");
+                        Console.WriteLine("3.) Google");
+                        Console.Write("\r\nSayı ile marka seçiniz: ");
+
+                        switch (Console.ReadLine())
+                        {
+                            case "1":
+                                return "Microsoft";
+                            case "2":
+                                return "IBM";
+                            case "3":
+                                return "Google";
+                            default:
+                                return "Boş";
+                        }
+                    }
+
+                    custData.orderType = MainMenu();
+                    // yeni
+
                     //Listeye yeni objeyi atama
-                    allCust.Add(new customers(custData.idNo, custData.firstName, custData.secondName, custData.gender));
+                    allCust.Add(new customers(custData.idNo, custData.firstName, custData.secondName, custData.gender, custData.orderType));
 
-                    // allCust.Add(custData);
-                    // object[] arr_sample = allCust.ToArray();
-                    // int[] arr_sample = allId.ToArray();
-
-                    //Liste içerisindeki objeleri for ile yazdırma
                     // Son girilen verileri konsola yazdırır
                     customers.customerData(custData);
-                    // Console.WriteLine("Last Customer Data => İd: {0} / Name: {1} / SecName: {2} / Gender: {3}", custData.idNo, custData.firstName, custData.secondName, custData.gender);
                     Console.WriteLine();
                     int res = 1;
+                    //Liste içerisindeki objeleri for ile yazdırma
                     foreach (var customerIndex in allCust)
                     {
-                        Console.WriteLine("Customer Data {4} => İd: {0} / Name: {1} / SecName: {2} / Gender: {3}", customerIndex.idNo, customerIndex.firstName, customerIndex.secondName, customerIndex.gender, res);
+                        Console.WriteLine("Customer Data {4} => İd: {0} / Name: {1} / SecName: {2} / Gender: {3} / Order: {5}", customerIndex.idNo, customerIndex.firstName, customerIndex.secondName, customerIndex.gender, res, customerIndex.orderType);
                         res++;
                     }
 
-                    // Console.WriteLine(allId);
-                    // custData.customerData();
                     Console.WriteLine("Kayıt alındı..");
                     Console.WriteLine("Çıkmak istiyorsanız false yazın: ");
                     lop = Convert.ToBoolean(Console.ReadLine());
@@ -97,19 +136,21 @@ namespace uzayc
         public string firstName;
         public string secondName;
         public string gender;
+        public string orderType;
 
         public customers()
         {
             //Boş create edip userdan bilgi almak için
         }
 
-        public customers(string id, string name, string secname, string gender)
+        public customers(string id, string name, string secname, string gender, string orderType)
         {
             //Listeye atarken kullandığım şablon
             this.idNo = id;
             this.firstName = name;
             this.secondName = secname;
             this.gender = gender;
+            this.orderType = orderType;
         }
 
         public static object takeData(int recId)//Daha az karmaşık görüntü için yukarıdaki işlemleri buraya
@@ -128,11 +169,12 @@ namespace uzayc
         public static void customerData(customers cust1)
         {
             Console.WriteLine();
-            Console.WriteLine("---Müşteri Bilgileri---");
+            Console.WriteLine("---Son Müşteri Bilgileri---");
             Console.WriteLine("Müşterinin tc'si: {0}", cust1.idNo);
             Console.WriteLine("Müşterinin adı: {0}", cust1.firstName);
             Console.WriteLine("Müşterinin soyismi: {0}", cust1.secondName);
             Console.WriteLine("Müşterinin cinsiyeti: {0}", cust1.gender);
+            Console.WriteLine("Müşterinin siparişi: {0}", cust1.orderType);
         }
     }
 }
