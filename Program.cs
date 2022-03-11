@@ -17,6 +17,8 @@ namespace uzayc
             {
                 Console.WriteLine();
 
+                // En fazla sipariş verilen ürünü ekrana yazdır
+
 
 
 
@@ -127,10 +129,10 @@ namespace uzayc
         {
             Console.WriteLine();
             Console.WriteLine("---Müşteri Bilgileri---");
-            Console.WriteLine("Müşterinin tc'si:{0}", cust1.idNo);
-            Console.WriteLine("Müşterinin adı {0}", cust1.firstName);
-            Console.WriteLine("Müşterinin soyismi:{0}", cust1.secondName);
-            Console.WriteLine("Müşterinin cinsiyeti {0}", cust1.gender);
+            Console.WriteLine("Müşterinin tc'si: {0}", cust1.idNo);
+            Console.WriteLine("Müşterinin adı: {0}", cust1.firstName);
+            Console.WriteLine("Müşterinin soyismi: {0}", cust1.secondName);
+            Console.WriteLine("Müşterinin cinsiyeti: {0}", cust1.gender);
         }
     }
 }
