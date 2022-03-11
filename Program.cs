@@ -15,6 +15,7 @@ namespace uzayc
             // int[] arr_sample = intermediate_list.ToArray();
             while (lop == true)
             {
+                Console.WriteLine();
 
 
 
@@ -67,9 +68,15 @@ namespace uzayc
                     // int[] arr_sample = allId.ToArray();
 
                     //Liste içerisindeki objeleri for ile yazdırma
+                    // Son girilen verileri konsola yazdırır
+                    customers.customerData(custData);
+                    // Console.WriteLine("Last Customer Data => İd: {0} / Name: {1} / SecName: {2} / Gender: {3}", custData.idNo, custData.firstName, custData.secondName, custData.gender);
+                    Console.WriteLine();
+                    int res = 1;
                     foreach (var customerIndex in allCust)
                     {
-                        Console.WriteLine("Customer Data => İd: {0} / Name: {1} / SecName: {2} / Gender: {3}", customerIndex.idNo, customerIndex.firstName, customerIndex.secondName, customerIndex.gender);
+                        Console.WriteLine("Customer Data {4} => İd: {0} / Name: {1} / SecName: {2} / Gender: {3}", customerIndex.idNo, customerIndex.firstName, customerIndex.secondName, customerIndex.gender, res);
+                        res++;
                     }
 
                     // Console.WriteLine(allId);
@@ -89,18 +96,19 @@ namespace uzayc
         public string secondName;
         public string gender;
 
-         public customers(){
-         //Boş create edip userdan bilgi almak için
-         }
+        public customers()
+        {
+            //Boş create edip userdan bilgi almak için
+        }
 
         public customers(string id, string name, string secname, string gender)
-    {
-        //Listeye atarken kullandığım şablon
-        this.idNo = id;
-        this.firstName = name;
-        this.secondName = secname;
-        this.gender = gender;
-    }
+        {
+            //Listeye atarken kullandığım şablon
+            this.idNo = id;
+            this.firstName = name;
+            this.secondName = secname;
+            this.gender = gender;
+        }
 
         public static object takeData(int recId)//Daha az karmaşık görüntü için yukarıdaki işlemleri buraya
         {
@@ -115,14 +123,14 @@ namespace uzayc
             return custData.idNo;
         }
 
-        public void customerData()
+        public static void customerData(customers cust1)
         {
             Console.WriteLine();
             Console.WriteLine("---Müşteri Bilgileri---");
-            Console.WriteLine("Müşterinin tc'si:{0}", idNo);
-            Console.WriteLine("Müşterinin adı {0}", firstName);
-            Console.WriteLine("Müşterinin soyismi:{0}", secondName);
-            Console.WriteLine("Müşterinin cinsiyeti {0}", gender);
+            Console.WriteLine("Müşterinin tc'si:{0}", cust1.idNo);
+            Console.WriteLine("Müşterinin adı {0}", cust1.firstName);
+            Console.WriteLine("Müşterinin soyismi:{0}", cust1.secondName);
+            Console.WriteLine("Müşterinin cinsiyeti {0}", cust1.gender);
         }
     }
 }
