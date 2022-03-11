@@ -114,6 +114,7 @@ namespace uzayc
                     // Son girilen verileri konsola yazdırır
                     customers.customerData(custData);
                     Console.WriteLine();
+                    Console.WriteLine("---Tüm Müşteri Bilgileri---");
                     int res = 1;
                     //Liste içerisindeki objeleri for ile yazdırma
                     foreach (var customerIndex in allCust)
