@@ -7,7 +7,7 @@ namespace uzayc
     {
         static void Main(string[] args)
         {
-            bool lop = true;
+            bool lop = true; // While döngüsünün bitmesi için sonda bunun içine atama yapıyoruz
             int[] aaaallId = new int[100]; //100'ü variable ile değiştir her işlem sonrası x'i arttır
             List<int> allId = new List<int>();
             List<customers> allCust = new List<customers>();
@@ -59,11 +59,14 @@ namespace uzayc
                     Console.Write("Cinsiyet giriniz: ");
                     custData.gender = Console.ReadLine();
 
+                    //Listeye yeni objeyi atama
                     allCust.Add(new customers(custData.idNo, custData.firstName, custData.secondName, custData.gender));
 
                     // allCust.Add(custData);
                     // object[] arr_sample = allCust.ToArray();
                     // int[] arr_sample = allId.ToArray();
+
+                    //Liste içerisindeki objeleri for ile yazdırma
                     foreach (var customerIndex in allCust)
                     {
                         Console.WriteLine("Customer Data => İd: {0} / Name: {1} / SecName: {2} / Gender: {3}", customerIndex.idNo, customerIndex.firstName, customerIndex.secondName, customerIndex.gender);
@@ -71,6 +74,7 @@ namespace uzayc
 
                     // Console.WriteLine(allId);
                     // custData.customerData();
+                    Console.WriteLine("Kayıt alındı..");
                     Console.WriteLine("Çıkmak istiyorsanız false yazın: ");
                     lop = Convert.ToBoolean(Console.ReadLine());
                 }
@@ -86,18 +90,19 @@ namespace uzayc
         public string gender;
 
          public customers(){
-
+         //Boş create edip userdan bilgi almak için
          }
 
         public customers(string id, string name, string secname, string gender)
     {
+        //Listeye atarken kullandığım şablon
         this.idNo = id;
         this.firstName = name;
         this.secondName = secname;
         this.gender = gender;
     }
 
-        public static object takeData(int recId)
+        public static object takeData(int recId)//Daha az karmaşık görüntü için yukarıdaki işlemleri buraya
         {
             customers custData = new customers();
             custData.idNo = Convert.ToString(recId);
