@@ -117,7 +117,7 @@ namespace uzayc
                     Console.WriteLine("---Tüm Müşteri Bilgileri---");
                     int res = 1;
                     //Liste içerisindeki objeleri for ile yazdırma
-                    foreach (var customerIndex in allCust)
+                    foreach (var customerIndex in allCust.OrderBy(o=>o.idNo))
                     {
                         Console.WriteLine("Customer Data {4} => İd: {0} / Name: {1} / SecName: {2} / Gender: {3} / Order: {5}", customerIndex.idNo, customerIndex.firstName, customerIndex.secondName, customerIndex.gender, res, customerIndex.orderType);
                         res++;
