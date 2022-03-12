@@ -256,10 +256,28 @@ namespace uzayc
                 Console.WriteLine("***En Çok Tercih Edilen Marka: Google");
                 Console.WriteLine();
             }
+            else if (brand1 == brand2 && brand1 > brand3)
+            {
+                Console.WriteLine();
+                Console.WriteLine("***En Çok Tercih Edilen Marka: Microsoft ve IBM arasında eşitlik söz konusu");
+                Console.WriteLine();
+            }
+            else if (brand1 == brand3 && brand1 > brand2)
+            {
+                Console.WriteLine();
+                Console.WriteLine("***En Çok Tercih Edilen Marka: Microsoft ve Google arasında eşitlik söz konusu");
+                Console.WriteLine();
+            }
+            else if (brand2 == brand3 && brand2 > brand1)
+            {
+                Console.WriteLine();
+                Console.WriteLine("***En Çok Tercih Edilen Marka: Google ve IBM arasında eşitlik söz konusu");
+                Console.WriteLine();
+            }
             else
             {
                 Console.WriteLine();
-                Console.WriteLine("***En Çok Tercih Edilen Marka: Eşitlik Söz konusu");
+                Console.WriteLine("***En Çok Tercih Edilen Marka: Markalar arasında eşitlik söz konusu");
                 Console.WriteLine();
             }
         }
