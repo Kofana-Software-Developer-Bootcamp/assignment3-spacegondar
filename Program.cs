@@ -66,10 +66,11 @@ namespace uzayc
 
                     //Siparişin Seçilmesi. X. satırdaki customers metotu(Mainmenu).
                     custData.orderType = customers.MainMenu();
+                    custData.orderService = customers.altMenu();
 
 
                     //Listeye yeni objeyi atama
-                    allCust.Add(new customers(custData.idNo, custData.firstName, custData.secondName, custData.gender, custData.orderType));
+                    allCust.Add(new customers(custData.idNo, custData.firstName, custData.secondName, custData.gender, custData.orderType, custData.orderService));
 
                     // Son girilen verileri konsola yazdırır
                     customers.customerData(custData);
@@ -79,7 +80,7 @@ namespace uzayc
                     //Liste içerisindeki objeleri for ile yazdırma
                     foreach (var customerIndex in allCust.OrderBy(o => Convert.ToInt64(o.idNo)))
                     {
-                        Console.WriteLine("Customer Data {4} => İd: {0} / Name: {1} / SecName: {2} / Gender: {3} / Order: {5}", customerIndex.idNo, customerIndex.firstName, customerIndex.secondName, customerIndex.gender, res, customerIndex.orderType);
+                        Console.WriteLine("Customer Data {4} => İd: {0} / Name: {1} / SecName: {2} / Gender: {3} / Order: {5} / Service: {6}", customerIndex.idNo, customerIndex.firstName, customerIndex.secondName, customerIndex.gender, res, customerIndex.orderType, customerIndex.orderService);
                         res++;
                     }
 
@@ -98,20 +99,22 @@ namespace uzayc
         public string secondName;
         public string gender;
         public string orderType;
+        public string orderService;
 
         public customers()
         {
             //Boş create edip userdan bilgi almak için
         }
 
-        public customers(string id, string name, string secname, string gender, string orderType)
+        public customers(string id, string name, string secname, string gender, string orderType, string orderService)
         {
-            //Listeye atarken kullandığımız şablon
+            //Listeye atarken kullandığımız const.
             this.idNo = id;
             this.firstName = name;
             this.secondName = secname;
             this.gender = gender;
             this.orderType = orderType;
+            this.orderService = orderService;
         }
 
         public static object takeData(int recId)//Daha az karmaşık görüntü için yukarıdaki işlemleri buraya
@@ -135,12 +138,13 @@ namespace uzayc
             Console.WriteLine("Müşterinin adı: {0}", cust1.firstName);
             Console.WriteLine("Müşterinin soyismi: {0}", cust1.secondName);
             Console.WriteLine("Müşterinin cinsiyeti: {0}", cust1.gender);
-            Console.WriteLine("Müşterinin siparişi: {0}", cust1.orderType);
+            Console.WriteLine("Müşterinin seçtiği marka: {0}", cust1.orderType);
+            Console.WriteLine("Müşterinin seçtiği hizmet: {0}", cust1.orderService);
         }
         public static string MainMenu()
         {
             Console.WriteLine();
-            Console.WriteLine("Seçenekler:");
+            Console.WriteLine("Markalar:");
             Console.WriteLine("1.) Microsoft");
             Console.WriteLine("2.) IBM");
             Console.WriteLine("3.) Google");
@@ -154,6 +158,27 @@ namespace uzayc
                     return "IBM";
                 case "3":
                     return "Google";
+                default:
+                    return "Boş";
+            }
+        }
+        public static string altMenu()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Hizmetler:");
+            Console.WriteLine("1.) Virtual Machine");
+            Console.WriteLine("2.) DevOps");
+            Console.WriteLine("3.) Database Solution");
+            Console.Write("\r\nSayı ile hizmet seçiniz: ");
+
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    return "Virtual Machine";
+                case "2":
+                    return "DevOps";
+                case "3":
+                    return "Database Solution";
                 default:
                     return "Boş";
             }
