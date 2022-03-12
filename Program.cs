@@ -9,117 +9,130 @@ namespace uzayc
     {
         static void Main(string[] args)
         {
-            List<string> brandArr = new List<string>();
-
+            List<string> brandArr = new List<string>(); // En çok seçilen markayı bulmak için
             bool lop = true; // While döngüsünün bitmesi veya devamı için sonda bunun içine atama yapıyoruz
             List<string> allId = new List<string>(); // ID'lerin tutulduğu liste
             List<customers> allCust = new List<customers>(); // Müşteri objelerinin tutulduğu liste
+            string passwords = "123";
             while (lop == true)
             {
-                Console.WriteLine();
-                // En fazla sipariş verilen ürünü ekrana yazdır
-                customers custData = new customers();
-                Console.Write("Yani kayıt oluşturmak için Tc giriniz: ");
-                string recentId = Console.ReadLine();
-
-                // ID girişinin int olup olmadığını kontrol ederek sadece sayılardan oluşan input alınıyor.
-                bool inputControl = !Int32.TryParse(recentId, out int number);
-                while (inputControl)
+                Console.WriteLine("İşlem Yapabilmek İçin Şifre Giriniz..");
+                string inpPassword = Console.ReadLine();
+                if (passwords == inpPassword)
                 {
-                    Console.Write("Lütfen Geçerli bir TC giriniz: ");
-                    recentId = Console.ReadLine();
-                    inputControl = !Int32.TryParse(recentId, out number);
-                }
+                    Console.WriteLine("Şifre Doğru İşlem Yapabilirsiniz..");
 
-                // Yeni girilen ID'nin objesini liste içerisinde bularak ismini konsola yazdırıyor.
-                void findId()
-                {
-                    foreach (var customerIndex in allCust)
+                    Console.WriteLine();
+                    // En fazla sipariş verilen ürünü ekrana yazdır
+                    customers custData = new customers();
+                    Console.Write("Yani kayıt oluşturmak için Tc giriniz: ");
+                    string recentId = Console.ReadLine();
+
+                    // ID girişinin int olup olmadığını kontrol ederek sadece sayılardan oluşan input alınıyor.
+                    bool inputControl = !Int32.TryParse(recentId, out int number);
+                    while (inputControl)
                     {
-                        if (customerIndex.idNo == recentId)
+                        Console.Write("Lütfen Geçerli bir TC giriniz: ");
+                        recentId = Console.ReadLine();
+                        inputControl = !Int32.TryParse(recentId, out number);
+                    }
+
+                    // Yeni girilen ID'nin objesini liste içerisinde bularak ismini konsola yazdırıyor.
+                    void findId()
+                    {
+                        foreach (var customerIndex in allCust)
                         {
-                            Console.WriteLine("Existing Customer => Name: {0}", customerIndex.firstName);
+                            if (customerIndex.idNo == recentId)
+                            {
+                                Console.WriteLine("Existing Customer => Name: {0} SecondName: {1}", customerIndex.firstName, customerIndex.secondName);
+                            }
                         }
                     }
-                }
 
-                // Yeni girilen ID liste içerisinde mevcutsa burası çalışıyor.
-                if (allId.Contains(recentId))
-                {
-                    Console.WriteLine("Müşteri Bilgisi mevcut..");
-                    findId(); // X. Satır Metot
-                    Console.WriteLine();
-                    // lop = Convert.ToBoolean(Console.ReadLine());
+                    // Yeni girilen ID liste içerisinde mevcutsa burası çalışıyor.
+                    if (allId.Contains(recentId))
+                    {
+                        Console.WriteLine("Müşteri Bilgisi mevcut..");
+                        findId(); // X. Satır Metot
+                        Console.WriteLine();
+                        // lop = Convert.ToBoolean(Console.ReadLine());
+                    }
+                    else
+                    {
+                        // Yeni müşteri bilgilerinin obje proplarına atanması.
+                        allId.Add(recentId);
+                        custData.idNo = recentId;
+                        Console.Write("İsim giriniz: ");
+                        custData.firstName = Console.ReadLine().ToUpper();
+                        Console.Write("Soyisim giriniz: ");
+                        custData.secondName = Console.ReadLine().ToUpper();
+
+                        // Ok tuşlarıyla Seçilebilen Gender Menüsü
+                        string prompt = "Lüften cinsiyeti seçiniz";
+                        string[] options = { "Erkek", "Kadın", "Diğer" };
+                        arrowMenu fancyMenu = new arrowMenu(prompt, options);
+                        int SelectedIndex = arrowMenu.Run(prompt, options, fancyMenu);
+                        switch (SelectedIndex)
+                        {
+                            case 0:
+                                custData.gender = MaleGender();
+                                break;
+                            case 1:
+                                custData.gender = FemGender();
+                                break;
+                            case 2:
+                                custData.gender = OtherGender();
+                                break;
+                        }
+                        string FemGender()
+                        {
+                            return "Kadın";
+                        }
+                        string MaleGender()
+                        {
+                            return "Erkek";
+                        }
+                        string OtherGender()
+                        {
+                            return "Diğer";
+                        }
+
+                        //Siparişin Seçilmesi. X. satırdaki customers metotu(Mainmenu).
+                        custData.orderType = customers.MainMenu();
+                        custData.orderService = customers.altMenu();
+                        //Markaları topladığım dizi
+                        brandArr.Add(custData.orderType);
+
+
+                        //Listeye yeni objeyi atama
+                        allCust.Add(new customers(custData.idNo, custData.firstName, custData.secondName, custData.gender, custData.orderType, custData.orderService));
+
+                        // Son girilen verileri konsola yazdırır
+                        customers.customerData(custData);
+                        Console.WriteLine();
+                        Console.WriteLine("---Tüm Müşteri Bilgileri---");
+                        int res = 1; // Toplam müşteri sayısını görebilmek için
+                                     //Liste içerisindeki objeleri for ile yazdırma
+                        foreach (var customerIndex in allCust.OrderBy(o => Convert.ToInt64(o.idNo)))
+                        {
+                            Console.WriteLine("Customer Data {4} => İd: {0} / Name: {1} / SecName: {2} / Gender: {3} / Order: {5} / Service: {6}", customerIndex.idNo, customerIndex.firstName, customerIndex.secondName, customerIndex.gender, res, customerIndex.orderType, customerIndex.orderService);
+                            res++;
+                        }
+
+                        Console.WriteLine("Kayıt alındı..");
+                        //En çok tercih edilen markayı bulan x. satırdaki method
+                        customers.brandCounter(brandArr);
+                        Console.WriteLine();
+                        // lop = Convert.ToBoolean(Console.ReadLine());
+                    }
                 }
                 else
                 {
-                    // Yeni müşteri bilgilerinin obje proplarına atanması.
-                    allId.Add(recentId);
-                    custData.idNo = recentId;
-                    Console.Write("İsim giriniz: ");
-                    custData.firstName = Console.ReadLine().ToUpper();
-                    Console.Write("Soyisim giriniz: ");
-                    custData.secondName = Console.ReadLine().ToUpper();
-
-                    // Ok tuşlarıyla Seçilebilen Gender Menüsü
-                    string prompt = "Lüften cinsiyeti seçiniz";
-                    string[] options = { "Erkek", "Kadın", "Diğer" };
-                    arrowMenu fancyMenu = new arrowMenu(prompt, options);
-                    int SelectedIndex = arrowMenu.Run(prompt, options, fancyMenu);
-                    switch (SelectedIndex)
-                    {
-                        case 0:
-                            custData.gender = MaleGender();
-                            break;
-                        case 1:
-                            custData.gender = FemGender();
-                            break;
-                        case 2:
-                            custData.gender = OtherGender();
-                            break;
-                    }
-                    string FemGender()
-                    {
-                        return "Kadın";
-                    }
-                    string MaleGender()
-                    {
-                        return "Erkek";
-                    }
-                    string OtherGender()
-                    {
-                        return "Diğer";
-                    }
-
-                    //Siparişin Seçilmesi. X. satırdaki customers metotu(Mainmenu).
-                    custData.orderType = customers.MainMenu();
-                    custData.orderService = customers.altMenu();
-                    //Markaları topladığım dizi
-                    brandArr.Add(custData.orderType);
-
-
-                    //Listeye yeni objeyi atama
-                    allCust.Add(new customers(custData.idNo, custData.firstName, custData.secondName, custData.gender, custData.orderType, custData.orderService));
-
-                    // Son girilen verileri konsola yazdırır
-                    customers.customerData(custData);
-                    Console.WriteLine();
-                    Console.WriteLine("---Tüm Müşteri Bilgileri---");
-                    int res = 1; // Toplam müşteri sayısını görebilmek için
-                    //Liste içerisindeki objeleri for ile yazdırma
-                    foreach (var customerIndex in allCust.OrderBy(o => Convert.ToInt64(o.idNo)))
-                    {
-                        Console.WriteLine("Customer Data {4} => İd: {0} / Name: {1} / SecName: {2} / Gender: {3} / Order: {5} / Service: {6}", customerIndex.idNo, customerIndex.firstName, customerIndex.secondName, customerIndex.gender, res, customerIndex.orderType, customerIndex.orderService);
-                        res++;
-                    }
-
-                    Console.WriteLine("Kayıt alındı..");
-                    //En çok tercih edilen markayı bulan x. satırdaki method
-                    customers.brandCounter(brandArr);
-                    Console.WriteLine();
-                    // lop = Convert.ToBoolean(Console.ReadLine());
+                    Console.Clear();
+                    Console.WriteLine("Şifre Yanlış");
                 }
             }
+
         }
     }
 
