@@ -9,9 +9,10 @@ namespace uzayc
     {
         static void Main(string[] args)
         {
-            List<string> allOrder = new List<string>();
-            List<string> contolOrder = new List<string>();
-            var a = allOrder.All(contolOrder.Contains);
+            // List<string> allOrder = new List<string>();
+            // List<string> contolOrder = new List<string>();
+            // var a = allOrder.All(contolOrder.Contains);
+            List<string> brandArr = new List<string>();
 
             bool lop = true; // While döngüsünün bitmesi veya devamı için sonda bunun içine atama yapıyoruz
             List<string> allId = new List<string>(); // ID'lerin tutulduğu liste
@@ -67,6 +68,25 @@ namespace uzayc
                     //Siparişin Seçilmesi. X. satırdaki customers metotu(Mainmenu).
                     custData.orderType = customers.MainMenu();
                     custData.orderService = customers.altMenu();
+
+                    //yeni
+                    brandArr.Add(custData.orderType);
+                    int brand1 = brandArr.Where(s=>s!=null && s.StartsWith("M")).Count();
+                    int brand2 = brandArr.Where(s=>s!=null && s.StartsWith("I")).Count();
+                    int brand3 = brandArr.Where(s=>s!=null && s.StartsWith("G")).Count();
+                    if(brand1 > brand2 && brand1 > brand3){
+                        Console.WriteLine("En Çok Tercih Edilen Marka: Microsoft");
+                    }
+                    else if(brand2 > brand1 && brand2 > brand3){
+                        Console.WriteLine("En Çok Tercih Edilen Marka: IBM");
+                    }
+                    else if(brand3 > brand2 && brand3 > brand1){
+                        Console.WriteLine("En Çok Tercih Edilen Marka: Google");
+                    }
+                    else{
+                        Console.WriteLine("En Çok Tercih Edilen Marka: Eşitlik Söz konusu");
+                    }
+                    //yeni
 
 
                     //Listeye yeni objeyi atama
