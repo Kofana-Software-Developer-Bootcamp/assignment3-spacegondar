@@ -18,35 +18,13 @@ namespace uzayc
             int[] aaaallId = new int[100]; //100'ü variable ile değiştir her işlem sonrası x'i arttır
             List<string> allId = new List<string>();
             List<customers> allCust = new List<customers>();
-            // List<Author> AuthorList = new List<Author>();
-            // int[] arr_sample = intermediate_list.ToArray();
             while (lop == true)
             {
                 Console.WriteLine();
 
                 // En fazla sipariş verilen ürünü ekrana yazdır
 
-
-
-
-
-                // BÜtün prgramı while'a sokup a değişkeni q olana kadar döndür
-
-
-
                 // // İlk girişte dizi boş mu kontrol et sonra direkt atayış ya da kontrole geç
-                // string[] customers = {"123", "uzay"};
-                // Console.Write("Yani kayıt oluşturmak için Tc giriniz");
-                // string name = Console.ReadLine();
-                // //bool b = customers.Contains(name);
-                // bool b = Array.Exists(customers, element => element == name);
-                // if(b){
-                //     Console.WriteLine("Kullanıcı mevcut.");
-                // }
-                // else{
-
-                // }
-                // Console.WriteLine("Hoşgeldin "+ name + " bebek");
 
                 customers custData = new customers();
                 Console.Write("Yani kayıt oluşturmak için Tc giriniz: ");
@@ -117,14 +95,14 @@ namespace uzayc
                     Console.WriteLine("---Tüm Müşteri Bilgileri---");
                     int res = 1;
                     //Liste içerisindeki objeleri for ile yazdırma
-                    foreach (var customerIndex in allCust.OrderBy(o=>o.idNo))
+                    foreach (var customerIndex in allCust.OrderBy(o =>Convert.ToInt64(o.idNo)))
                     {
                         Console.WriteLine("Customer Data {4} => İd: {0} / Name: {1} / SecName: {2} / Gender: {3} / Order: {5}", customerIndex.idNo, customerIndex.firstName, customerIndex.secondName, customerIndex.gender, res, customerIndex.orderType);
                         res++;
                     }
 
                     Console.WriteLine("Kayıt alındı..");
-                    Console.WriteLine("Çıkmak istiyorsanız false yazın: ");
+                    Console.WriteLine("Çıkmak istiyorsanız false, devam etmek için true yazın: ");
                     lop = Convert.ToBoolean(Console.ReadLine());
                 }
             }
