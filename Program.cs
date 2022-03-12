@@ -9,9 +9,6 @@ namespace uzayc
     {
         static void Main(string[] args)
         {
-            // List<string> allOrder = new List<string>();
-            // List<string> contolOrder = new List<string>();
-            // var a = allOrder.All(contolOrder.Contains);
             List<string> brandArr = new List<string>();
 
             bool lop = true; // While döngüsünün bitmesi veya devamı için sonda bunun içine atama yapıyoruz
@@ -27,7 +24,8 @@ namespace uzayc
 
                 // ID girişinin int olup olmadığını kontrol ederek sadece sayılardan oluşan input alınıyor.
                 bool inputControl = !Int32.TryParse(recentId, out int number);
-                while(inputControl){
+                while (inputControl)
+                {
                     Console.Write("Lütfen Geçerli bir TC giriniz: ");
                     recentId = Console.ReadLine();
                     inputControl = !Int32.TryParse(recentId, out number);
@@ -68,25 +66,8 @@ namespace uzayc
                     //Siparişin Seçilmesi. X. satırdaki customers metotu(Mainmenu).
                     custData.orderType = customers.MainMenu();
                     custData.orderService = customers.altMenu();
-
-                    //yeni
+                    //Markaları topladığım dizi
                     brandArr.Add(custData.orderType);
-                    int brand1 = brandArr.Where(s=>s!=null && s.StartsWith("M")).Count();
-                    int brand2 = brandArr.Where(s=>s!=null && s.StartsWith("I")).Count();
-                    int brand3 = brandArr.Where(s=>s!=null && s.StartsWith("G")).Count();
-                    if(brand1 > brand2 && brand1 > brand3){
-                        Console.WriteLine("En Çok Tercih Edilen Marka: Microsoft");
-                    }
-                    else if(brand2 > brand1 && brand2 > brand3){
-                        Console.WriteLine("En Çok Tercih Edilen Marka: IBM");
-                    }
-                    else if(brand3 > brand2 && brand3 > brand1){
-                        Console.WriteLine("En Çok Tercih Edilen Marka: Google");
-                    }
-                    else{
-                        Console.WriteLine("En Çok Tercih Edilen Marka: Eşitlik Söz konusu");
-                    }
-                    //yeni
 
 
                     //Listeye yeni objeyi atama
@@ -105,6 +86,8 @@ namespace uzayc
                     }
 
                     Console.WriteLine("Kayıt alındı..");
+                    //En çok tercih edilen markayı bulan x. satırdaki method
+                    customers.brandCounter(brandArr);
                     Console.WriteLine("Çıkmak istiyorsanız false, devam etmek için true yazın: ");
                     lop = Convert.ToBoolean(Console.ReadLine());
                 }
@@ -137,7 +120,7 @@ namespace uzayc
             this.orderService = orderService;
         }
 
-        public static object takeData(int recId)//Daha az karmaşık görüntü için yukarıdaki işlemleri buraya
+        public static object takeData(int recId)//Bilgi alımı için
         {
             customers custData = new customers();
             custData.idNo = Convert.ToString(recId);
@@ -162,7 +145,7 @@ namespace uzayc
             Console.WriteLine("Müşterinin seçtiği hizmet: {0}", cust1.orderService);
         }
         public static string MainMenu()
-        {
+        {   // Marka seçilen sepet
             Console.WriteLine();
             Console.WriteLine("Markalar:");
             Console.WriteLine("1.) Microsoft");
@@ -183,7 +166,7 @@ namespace uzayc
             }
         }
         public static string altMenu()
-        {
+        {   // Hizmet Seçilen Sepet
             Console.WriteLine();
             Console.WriteLine("Hizmetler:");
             Console.WriteLine("1.) Virtual Machine");
@@ -201,6 +184,29 @@ namespace uzayc
                     return "Database Solution";
                 default:
                     return "Boş";
+            }
+        }
+        public static void brandCounter(List<string> brandArr)
+        {   // Başlangıç harflerine göre tekrar eden marka sayısı kaydediliyor
+            int brand1 = brandArr.Where(s => s != null && s.StartsWith("M")).Count();
+            int brand2 = brandArr.Where(s => s != null && s.StartsWith("I")).Count();
+            int brand3 = brandArr.Where(s => s != null && s.StartsWith("G")).Count();
+            // Sayı büyüklüklerinin kontrolü
+            if (brand1 > brand2 && brand1 > brand3)
+            {
+                Console.WriteLine("En Çok Tercih Edilen Marka: Microsoft");
+            }
+            else if (brand2 > brand1 && brand2 > brand3)
+            {
+                Console.WriteLine("En Çok Tercih Edilen Marka: IBM");
+            }
+            else if (brand3 > brand2 && brand3 > brand1)
+            {
+                Console.WriteLine("En Çok Tercih Edilen Marka: Google");
+            }
+            else
+            {
+                Console.WriteLine("En Çok Tercih Edilen Marka: Eşitlik Söz konusu");
             }
         }
     }
