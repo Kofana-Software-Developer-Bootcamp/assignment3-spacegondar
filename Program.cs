@@ -48,8 +48,8 @@ namespace uzayc
                 {
                     Console.WriteLine("Müşteri Bilgisi mevcut..");
                     findId(); // X. Satır Metot
-                    Console.WriteLine("Çıkmak istiyorsanız false, devam etmek için true yazın: ");
-                    lop = Convert.ToBoolean(Console.ReadLine());
+                    Console.WriteLine();
+                    // lop = Convert.ToBoolean(Console.ReadLine());
                 }
                 else
                 {
@@ -60,10 +60,8 @@ namespace uzayc
                     custData.firstName = Console.ReadLine().ToUpper();
                     Console.Write("Soyisim giriniz: ");
                     custData.secondName = Console.ReadLine().ToUpper();
-                    Console.Write("Cinsiyet giriniz: ");
-                    // custData.gender = Console.ReadLine().ToUpper();
 
-                    // Ok tuşlarıyla Seçilebilen Menü
+                    // Ok tuşlarıyla Seçilebilen Gender Menüsü
                     string prompt = "Lüften cinsiyeti seçiniz";
                     string[] options = { "Erkek", "Kadın", "Diğer" };
                     arrowMenu fancyMenu = new arrowMenu(prompt, options);
@@ -118,8 +116,8 @@ namespace uzayc
                     Console.WriteLine("Kayıt alındı..");
                     //En çok tercih edilen markayı bulan x. satırdaki method
                     customers.brandCounter(brandArr);
-                    Console.WriteLine("Çıkmak istiyorsanız false, devam etmek için true yazın: ");
-                    lop = Convert.ToBoolean(Console.ReadLine());
+                    Console.WriteLine();
+                    // lop = Convert.ToBoolean(Console.ReadLine());
                 }
             }
         }
@@ -263,6 +261,7 @@ namespace uzayc
         }
         public static void DisplayOptions(string Prompt, string[] Options, arrowMenu SelecMenu)
         {
+            // Menü ve Soruyu Yazdıran, Seçilen Genderı Renklendiren Blok
             Console.WriteLine(Prompt);
             for (int i = 0; i < Options.Length; i++)
             {
@@ -295,7 +294,7 @@ namespace uzayc
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                 keyPressed = keyInfo.Key;
 
-                // update selected index base by arrow key
+                // Ok Tuşlarıyla Selected Değişimi
                 if (keyPressed == ConsoleKey.UpArrow)
                 {
                     SelecMenu.SelectedIndex--;
@@ -313,6 +312,7 @@ namespace uzayc
                     }
                 }
             }
+            // Entera basılana kadar loopta menü dönecek
             while (keyPressed != ConsoleKey.Enter);
             return SelecMenu.SelectedIndex;
         }
