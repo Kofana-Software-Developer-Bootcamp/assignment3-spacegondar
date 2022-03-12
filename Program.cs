@@ -61,7 +61,37 @@ namespace uzayc
                     Console.Write("Soyisim giriniz: ");
                     custData.secondName = Console.ReadLine().ToUpper();
                     Console.Write("Cinsiyet giriniz: ");
-                    custData.gender = Console.ReadLine().ToUpper();
+                    // custData.gender = Console.ReadLine().ToUpper();
+
+                    // Ok tuşlarıyla Seçilebilen Menü
+                    string prompt = "Lüften cinsiyeti seçiniz";
+                    string[] options = { "Erkek", "Kadın", "Diğer" };
+                    arrowMenu fancyMenu = new arrowMenu(prompt, options);
+                    int SelectedIndex = arrowMenu.Run(prompt, options, fancyMenu);
+                    switch (SelectedIndex)
+                    {
+                        case 0:
+                            custData.gender = MaleGender();
+                            break;
+                        case 1:
+                            custData.gender = FemGender();
+                            break;
+                        case 2:
+                            custData.gender = OtherGender();
+                            break;
+                    }
+                    string FemGender()
+                    {
+                        return "Kadın";
+                    }
+                    string MaleGender()
+                    {
+                        return "Erkek";
+                    }
+                    string OtherGender()
+                    {
+                        return "Diğer";
+                    }
 
                     //Siparişin Seçilmesi. X. satırdaki customers metotu(Mainmenu).
                     custData.orderType = customers.MainMenu();
@@ -194,20 +224,97 @@ namespace uzayc
             // Sayı büyüklüklerinin kontrolü
             if (brand1 > brand2 && brand1 > brand3)
             {
-                Console.WriteLine("En Çok Tercih Edilen Marka: Microsoft");
+                Console.WriteLine();
+                Console.WriteLine("***En Çok Tercih Edilen Marka: Microsoft");
+                Console.WriteLine();
             }
             else if (brand2 > brand1 && brand2 > brand3)
             {
-                Console.WriteLine("En Çok Tercih Edilen Marka: IBM");
+                Console.WriteLine();
+                Console.WriteLine("***En Çok Tercih Edilen Marka: IBM");
+                Console.WriteLine();
             }
             else if (brand3 > brand2 && brand3 > brand1)
             {
-                Console.WriteLine("En Çok Tercih Edilen Marka: Google");
+                Console.WriteLine();
+                Console.WriteLine("***En Çok Tercih Edilen Marka: Google");
+                Console.WriteLine();
             }
             else
             {
-                Console.WriteLine("En Çok Tercih Edilen Marka: Eşitlik Söz konusu");
+                Console.WriteLine();
+                Console.WriteLine("***En Çok Tercih Edilen Marka: Eşitlik Söz konusu");
+                Console.WriteLine();
             }
+        }
+    }
+
+    class arrowMenu
+    {
+        public int SelectedIndex;
+        public string[] Options;
+        public string Prompt;
+
+        public arrowMenu(string prompt, string[] options)
+        {
+            Prompt = prompt;
+            Options = options;
+            SelectedIndex = 0;
+        }
+        public static void DisplayOptions(string Prompt, string[] Options, arrowMenu SelecMenu)
+        {
+            Console.WriteLine(Prompt);
+            for (int i = 0; i < Options.Length; i++)
+            {
+                string currentOption = Options[i];
+                string prefix;
+                if (i == SelecMenu.SelectedIndex)
+                {
+                    prefix = "*";
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.BackgroundColor = ConsoleColor.White;
+                }
+                else
+                {
+                    prefix = " ";
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.BackgroundColor = ConsoleColor.Black;
+                }
+
+                Console.WriteLine($"{prefix} << {currentOption} >>");
+            }
+            Console.ResetColor();
+        }
+        public static int Run(string Prompt, string[] Options, arrowMenu SelecMenu)
+        {
+            ConsoleKey keyPressed;
+            do
+            {
+                Console.Clear();
+                DisplayOptions(Prompt, Options, SelecMenu);
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                keyPressed = keyInfo.Key;
+
+                // update selected index base by arrow key
+                if (keyPressed == ConsoleKey.UpArrow)
+                {
+                    SelecMenu.SelectedIndex--;
+                    if (SelecMenu.SelectedIndex == -1)
+                    {
+                        SelecMenu.SelectedIndex = Options.Length - 1;
+                    }
+                }
+                else if (keyPressed == ConsoleKey.DownArrow)
+                {
+                    SelecMenu.SelectedIndex++;
+                    if (SelecMenu.SelectedIndex == Options.Length)
+                    {
+                        SelecMenu.SelectedIndex = 0;
+                    }
+                }
+            }
+            while (keyPressed != ConsoleKey.Enter);
+            return SelecMenu.SelectedIndex;
         }
     }
 }
