@@ -33,12 +33,12 @@ namespace uzayc
                         string recentId = Console.ReadLine();
 
                         // ID girişinin int olup olmadığını kontrol ederek sadece sayılardan oluşan input alınıyor.
-                        bool inputControl = !Int32.TryParse(recentId, out int number);
+                        bool inputControl = !Int64.TryParse(recentId, out long number);
                         while (inputControl)
                         {
                             Console.Write("Lütfen Geçerli bir TC giriniz: ");
                             recentId = Console.ReadLine();
-                            inputControl = !Int32.TryParse(recentId, out number);
+                            inputControl = !Int64.TryParse(recentId, out number);
                         }
 
                         // Yeni girilen ID'nin objesini liste içerisinde bularak ismini konsola yazdırıyor.
